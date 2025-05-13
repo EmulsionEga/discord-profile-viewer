@@ -2,8 +2,8 @@
 
 A web application that allows users to view Discord profiles by ID, including real-time status, activities, connections, and more. This project uses Discord's API through a Discord bot to fetch accurate user information.
 
-![Discord Profile Viewer Screenshot No.1](https://i.ibb.co/V0VxJfB/Screenshot-2025-05-13-173322.png)
-![Discord Profile Viewer Screenshot No.2](https://i.ibb.co/cXnMpzK/discord-profile-details.png)
+![Discord Profile Viewer Screenshot No.1](https://i.ibb.co/V0VxJf1B/Screenshot-2025-05-13-173322.png)
+![Discord Profile Viewer Screenshot No.2](https://i.ibb.co/6J1C2mGq/Screenshot-2025-05-13-173702.png)
 
 ## Features
 
