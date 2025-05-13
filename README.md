@@ -2,8 +2,8 @@
 
 A web application that allows users to view Discord profiles by ID, including real-time status, activities, connections, and more. This project uses Discord's API through a Discord bot to fetch accurate user information.
 
-![Discord Profile Viewer Screenshot No.1](https://i.ibb.co/V0VxJf1B/Screenshot-2025-05-13-173322.png)
-![Discord Profile Viewer Screenshot No.2](https://github.com/user-attachments/assets/aa7420fa-cabf-430d-94ec-afbf5e8733c7)
+![Discord Profile Viewer Screenshot No.1](https://i.ibb.co/V0VxJfB/Screenshot-2025-05-13-173322.png)
+![Discord Profile Viewer Screenshot No.2](https://i.ibb.co/cXnMpzK/discord-profile-details.png)
 
 ## Features
 
@@ -35,7 +35,7 @@ This application is optimized for deployment on Vercel's serverless platform.
    - Copy the bot token for the next step
 
 3. **Deploy to Vercel**
-   - [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fdiscord-profile-viewer)
+   - [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FEmulsionEga%2Fdiscord-profile-viewer)
    - During deployment, set the following environment variables:
 
 4. **Set Environment Variables**
