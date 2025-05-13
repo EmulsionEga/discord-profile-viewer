@@ -57,7 +57,7 @@ This application is optimized for deployment on Vercel's serverless platform.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/discord-profile-viewer.git
+   git clone https://github.com/EmulsionEga/discord-profile-viewer.git
    cd discord-profile-viewer
    ```
 
