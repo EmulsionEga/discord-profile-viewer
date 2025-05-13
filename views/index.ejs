@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card welcome-card">
+            <div class="welcome-header">
+                <i class="fab fa-discord discord-icon"></i>
+                <h1>Discord Profile Viewer</h1>
+            </div>
+            
+            <div class="welcome-content">
+                <p>View your Discord profile information including your avatar, username, connections, and more.</p>
+                
+                <% if (!user) { %>
+                    <div class="login-section">
+                        <p>Please login with Discord to view your profile:</p>
+                        <a href="/auth/discord" class="discord-login-btn">
+                            <i class="fab fa-discord"></i> Login with Discord
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div class="logged-in-section">
+                        <p>Welcome back, <strong><%= user.username %></strong>!</p>
+                        <div class="action-buttons">
+                            <a href="/profile" class="view-profile-btn">View Your Profile</a>
+                            <a href="/auth/logout" class="logout-btn">Logout</a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            
+            <div class="welcome-footer">
+                <p>This application uses Discord's API to display your profile information.</p>
+                <p>We do not store any of your data.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

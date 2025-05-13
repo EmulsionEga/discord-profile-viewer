@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Profile Viewer</title>
+    <meta name="description" content="View Discord user profiles including avatars, badges, connections and more">
+    <meta name="theme-color" content="#5865F2">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta property="og:title" content="Discord Profile Viewer">
+    <meta property="og:description" content="View Discord user profiles including avatars, badges, connections and more">
+    <meta property="og:image" content="og-image.png">
+    <meta property="og:url" content="https://discord-profile-viewer.example.com">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header>
+            <h1 class="visually-hidden">Discord Profile Viewer</h1>
+        </header>
+        
+        <main id="main-content">
+            <div class="card">
+                <div class="banner">
+                    <div class="profile-setup">
+                        <h2>Discord Profile Viewer</h2>
+                        <p>Enter your Discord ID to display your profile information</p>
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                id="discord-id-input" 
+                                placeholder="Enter your Discord ID" 
+                                aria-label="Discord ID"
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                            <button id="load-profile-btn" aria-label="Load Profile">
+                                <i class="fas fa-search" aria-hidden="true"></i> Load Profile
+                            </button>
+                        </div>
+                        <div class="auth-options">
+                            <p>Or authenticate with Discord:</p>
+                            <button id="discord-auth-btn" class="discord-auth-btn" onclick="window.location.href='/auth/discord'">
+                                <i class="fab fa-discord" aria-hidden="true"></i> Login with Discord
+                            </button>                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-content" id="profile-content">
+                    <div class="loading-spinner" id="loading-spinner">
+                        <div class="spinner" aria-hidden="true"></div>
+                        <p>Loading profile data...</p>
+                    </div>
+                    
+                    <div class="profile-data" id="profile-data" style="display: none;">
+                        <div class="avatar-container">
+                            <img id="user-avatar" src="" alt="Discord Avatar">
+                            <div id="status-indicator" title="Online Status" aria-label="Online Status"></div>
+                        </div>
+                        
+                        <div class="user-info">
+                            <h2 id="username">Username</h2>
+                            <p id="user-id" class="user-id" title="Click to copy">ID: <span id="user-id-value"></span></p>
+                            
+                            <div class="badges" id="badges" aria-label="User Badges">
+                                <!-- Badges will be inserted here -->
+                            </div>
+                            
+                            <div class="about-me">
+                                <h3><i class="fas fa-user" aria-hidden="true"></i> About Me</h3>
+                                <p id="about-me-text">Loading...</p>
+                            </div>
+                            
+                            <div class="member-since">
+                                <h3><i class="fas fa-calendar-alt" aria-hidden="true"></i> Discord Member Since</h3>
+                                <p id="member-since-date">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="error-message" id="error-message" style="display: none;" role="alert">
+                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                        <p id="error-text">Could not load profile information.</p>
+                        <button id="retry-btn" class="retry-btn">Try Again</button>
+                    </div>
+                </div>
+                
+                <div class="connections" id="connections">
+                    <h3><i class="fas fa-link" aria-hidden="true"></i> Connections</h3>
+                    <div class="connections-list" id="connections-list" aria-label="User Connections">
+                        <!-- Connections will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <h3><i class="fas fa-question-circle" aria-hidden="true"></i> How to Find Your Discord ID</h3>
+                    <ol>
+                        <li>Open Discord and go to <strong>User Settings</strong> (gear icon)</li>
+                        <li>Navigate to <strong>Advanced</strong> in the left sidebar</li>
+                        <li>Enable <strong>Developer Mode</strong></li>
+                        <li>Right-click on your username and select <strong>Copy ID</strong></li>
+                    </ol>
+                    <div class="help-image">
+                        <img src="/images/discord-id-help.png" alt="Screenshot showing how to copy Discord ID" width="300">
+                    </div>
+                </div>
+                
+                <div class="keyboard-shortcuts">
+                    <h3><i class="fas fa-keyboard" aria-hidden="true"></i> Keyboard Shortcuts</h3>
+                    <ul>
+                        <li><kbd>Enter</kbd> - Load profile when input is focused</li>
+                        <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Load profile from anywhere</li>
+                        <li><kbd>Alt</kbd> + <kbd>T</kbd> - Toggle dark/light theme</li>
+                        <li><kbd>Esc</kbd> - Clear input field</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="recent-profiles" id="recent-profiles">
+                <h3><i class="fas fa-history" aria-hidden="true"></i> Recently Viewed Profiles</h3>
+                <div class="recent-profiles-list" id="recent-profiles-list">
+                    <!-- Recent profiles will be inserted here -->
+                    <p class="empty-state">No recently viewed profiles</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p>This is not affiliated with Discord Inc.</p>
+                <p>Discord is a trademark of Discord Inc.</p>
+                <p class="version">Version 1.0.0</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="privacy-link">Privacy Policy</a>
+                <a href="#" id="terms-link">Terms of Use</a>
+                <a href="https://github.com/yourusername/discord-profile-viewer" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github" aria-hidden="true"></i> GitHub
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="privacy-modal" id="privacy-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-privacy-modal" aria-label="Close privacy policy">×</button>
+            <h2>Privacy Policy</h2>
+            <div class="modal-body">
+                <p>This application does not store any personal data. Discord IDs entered are only used to fetch profile information and are stored locally in your browser for convenience.</p>
+                <p>We use local storage to remember your theme preference and recently viewed profiles.</p>
+                <p>No data is sent to our servers except when authenticating through Discord's official OAuth2 flow.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="terms-modal" id="terms-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-terms-modal" aria-label="Close terms of use">×</button>
+            <h2>Terms of Use</h2>
+            <div class="modal-body">
+                <p>This tool is provided for educational and personal use only.</p>
+                <p>By using this application, you agree not to use it for any malicious purposes or in violation of Discord's Terms of Service.</p>
+                <p>We are not responsible for any misuse of this tool.</p>
+            </div>
+        </div>
+    </div>
+    
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+    </button>
+    
+    <button id="back-to-top" class="back-to-top" title="Back to Top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+    
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

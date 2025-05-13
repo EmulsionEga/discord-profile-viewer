@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Discord Profile Viewer</title>
+    <meta name="description" content="Page not found - Discord Profile Viewer">
+    <meta name="theme-color" content="#5865F2">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/discord-finder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            min-height: 60vh;
+        }
+        
+        .error-icon {
+            font-size: 80px;
+            color: var(--discord-red);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .error-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--discord-text);
+        }
+        
+        .error-message {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--discord-secondary-text);
+            max-width: 600px;
+            line-height: 1.5;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .error-btn {
+            background-color: var(--discord-blurple);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .error-btn:hover {
+            background-color: #4752c4;
+            transform: translateY(-2px);
+        }
+        
+        .error-btn.secondary {
+            background-color: var(--discord-input-bg);
+            color: var(--discord-text);
+        }
+        
+        .error-btn.secondary:hover {
+            background-color: var(--discord-hover);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .discord-wumpus {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @media (max-width: 480px) {
+            .error-icon {
+                font-size: 60px;
+            }
+            
+            .error-title {
+                font-size: 24px;
+            }
+            
+            .error-message {
+                font-size: 16px;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .error-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .discord-wumpus {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header>
+            <h1 class="visually-hidden">404 - Page Not Found</h1>
+        </header>
+        
+        <main id="main-content">
+            <div class="card">
+                <div class="error-container">
+                    <img src="images/wumpus.gif" alt="Discord Wumpus" class="discord-wumpus">
+                    <h2 class="error-title">404 - Page Not Found</h2>
+                    <p class="error-message">Oops! It looks like the page you're looking for has vanished into the Discord void. Wumpus has searched everywhere but couldn't find it.</p>
+                    
+                    <div class="error-actions">
+                        <a href="/" class="error-btn">
+                            <i class="fas fa-home" aria-hidden="true"></i> Back to Home
+                        </a>
+                        <button onclick="window.history.back()" class="error-btn secondary">
+                            <i class="fas fa-arrow-left" aria-hidden="true"></i> Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p>This is not affiliated with Discord Inc.</p>
+                <p>Discord is a trademark of Discord Inc.</p>
+                <p class="version">Version 1.0.0</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="privacy-link">Privacy Policy</a>
+                <a href="#" id="terms-link">Terms of Use</a>
+                <a href="https://github.com/yourusername/discord-profile-viewer" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github" aria-hidden="true"></i> GitHub
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="privacy-modal" id="privacy-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-privacy-modal" aria-label="Close privacy policy">×</button>
+            <h2>Privacy Policy</h2>
+            <div class="modal-body">
+                <p>This application does not store any personal data. Discord IDs entered are only used to fetch profile information and are stored locally in your browser for convenience.</p>
+                <p>We use local storage to remember your theme preference and recently viewed profiles.</p>
+                <p>No data is sent to our servers except when authenticating through Discord's official OAuth2 flow.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="terms-modal" id="terms-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-terms-modal" aria-label="Close terms of use">×</button>
+            <h2>Terms of Use</h2>
+            <div class="modal-body">
+                <p>This tool is provided for educational and personal use only.</p>
+                <p>By using this application, you agree not to use it for any malicious purposes or in violation of Discord's Terms of Service.</p>
+                <p>We are not responsible for any misuse of this tool.</p>
+            </div>
+        </div>
+    </div>
+    
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+    </button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('discord-theme');
+                if (savedTheme === 'light') {
+                    document.body.classList.add('light-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+                
+                // Theme toggle event listener
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-theme');
+                    
+                    if (document.body.classList.contains('light-theme')) {
+                        localStorage.setItem('discord-theme', 'light');
+                        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    } else {
+                        localStorage.setItem('discord-theme', 'dark');
+                        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    }
+                });
+            }
+            
+            // Modal functionality
+            const privacyLink = document.getElementById('privacy-link');
+            const termsLink = document.getElementById('terms-link');
+            const privacyModal = document.getElementById('privacy-modal');
+            const termsModal = document.getElementById('terms-modal');
+            const closePrivacyModal = document.getElementById('close-privacy-modal');
+            const closeTermsModal = document.getElementById('close-terms-modal');
+            
+            if (privacyLink && privacyModal) {
+                privacyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    privacyModal.style.display = 'flex';
+                });
+            }
+            
+            if (termsLink && termsModal) {
+                termsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    termsModal.style.display = 'flex';
+                });
+            }
+            
+            if (closePrivacyModal && privacyModal) {
+                closePrivacyModal.addEventListener('click', function() {
+                    privacyModal.style.display = 'none';
+                });
+            }
+            
+            if (closeTermsModal && termsModal) {
+                closeTermsModal.addEventListener('click', function() {
+                    termsModal.style.display = 'none';
+                });
+            }
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(e) {
+                if (privacyModal && e.target === privacyModal) {
+                    privacyModal.style.display = 'none';
+                }
+                if (termsModal && e.target === termsModal) {
+                    termsModal.style.display = 'none';
+                }
+            });
+            
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    if (privacyModal) privacyModal.style.display = 'none';
+                    if (termsModal) termsModal.style.display = 'none';
+                }
+            });
+            
+            // Track 404 page view (analytics)
+            console.log('Analytics: Page - Load - 404 Not Found');
+        });
+    </script>
+</body>
+</html>

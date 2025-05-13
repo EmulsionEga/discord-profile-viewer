@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <meta name="description" content="View Discord profile information via webhook">
+    <meta name="theme-color" content="#5865F2">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header>
+            <h1 class="visually-hidden">Discord Profile via Webhook</h1>
+        </header>
+        
+        <main id="main-content">
+            <div class="card">
+                <div class="banner">
+                    <div class="profile-setup">
+                        <h2>Discord Profile via Webhook</h2>
+                        <p>This page displays profile information received from a Discord webhook</p>
+                    </div>
+                </div>
+                
+                <div class="profile-content">
+                    <% if (webhookData) { %>
+                        <div class="profile-data">
+                            <div class="avatar-container">
+                                <img 
+                                    src="<%= webhookData.avatar_url || webhookData.user?.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png' %>" 
+                                    alt="Discord Avatar" 
+                                    class="user-avatar"
+                                >
+                                <div class="status-indicator" title="Status from webhook"></div>
+                            </div>
+                            
+                            <div class="user-info">
+                                <h2 class="username"><%= webhookData.username || webhookData.user?.username || 'Unknown User' %></h2>
+                                <% if (webhookData.id || webhookData.user?.id) { %>
+                                    <p class="user-id" title="Click to copy">ID: <%= webhookData.id || webhookData.user?.id %></p>
+                                <% } %>
+                                
+                                <div class="detail-item">
+                                    <h3><i class="fas fa-info-circle"></i> Webhook Information</h3>
+                                    <p>This profile information was received via a Discord webhook.</p>
+                                    <% if (webhookData.timestamp) { %>
+                                        <p>Received: <%= new Date(webhookData.timestamp).toLocaleString() %></p>
+                                    <% } %>
+                                </div>
+                                
+                                <% if (webhookData.content) { %>
+                                    <div class="detail-item">
+                                        <h3><i class="fas fa-comment"></i> Message Content</h3>
+                                        <p><%= webhookData.content %></p>
+                                    </div>
+                                <% } %>
+                                
+                                <% if (webhookData.embeds && webhookData.embeds.length > 0) { %>
+                                    <div class="detail-item">
+                                        <h3><i class="fas fa-file-alt"></i> Embeds</h3>
+                                        <% webhookData.embeds.forEach(embed => { %>
+                                            <div class="embed-item" style="border-left: 4px solid <%= embed.color ? '#' + embed.color.toString(16) : '#5865F2' %>">
+                                                <% if (embed.title) { %>
+                                                    <h4><%= embed.title %></h4>
+                                                <% } %>
+                                                <% if (embed.description) { %>
+                                                    <p><%= embed.description %></p>
+                                                <% } %>
+                                                <% if (embed.fields && embed.fields.length > 0) { %>
+                                                    <div class="embed-fields">
+                                                        <% embed.fields.forEach(field => { %>
+                                                            <div class="embed-field">
+                                                                <h5><%= field.name %></h5>
+                                                                <p><%= field.value %></p>
+                                                            </div>
+                                                        <% }) %>
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>No webhook data available. Please send a webhook to this endpoint first.</p>
+                            <div class="webhook-setup-info">
+                                <h3>How to Set Up a Discord Webhook</h3>
+                                <ol>
+                                    <li>Go to your Discord server settings</li>
+                                    <li>Click on "Integrations" and then "Webhooks"</li>
+                                    <li>Create a new webhook or edit an existing one</li>
+                                    <li>Set the webhook URL to: <code><%= process.env.BASE_URL || 'http://localhost:3000' %>/webhook/discord</code></li>
+                                    <li>Send a message to the webhook to see your profile information here</li>
+                                </ol>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                
+                <div class="webhook-actions">
+                    <h3><i class="fas fa-cog"></i> Actions</h3>
+                    <div class="action-buttons">
+                        <a href="/" class="action-btn secondary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <button id="refresh-btn" class="action-btn">
+                            <i class="fas fa-sync-alt"></i> Refresh Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p>This is not affiliated with Discord Inc.</p>
+                <p>Discord is a trademark of Discord Inc.</p>
+                <p class="version">Version 1.0.0</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="privacy-link">Privacy Policy</a>
+                <a href="#" id="terms-link">Terms of Use</a>
+                <a href="https://github.com/yourusername/discord-profile-viewer" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('discord-theme');
+                if (savedTheme === 'light') {
+                    document.body.classList.add('light-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+                
+                // Theme toggle event listener
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-theme');
+                    
+                    if (document.body.classList.contains('light-theme')) {
+                        localStorage.setItem('discord-theme', 'light');
+                        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    } else {
+                        localStorage.setItem('discord-theme', 'dark');
+                        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    }
+                });
+            }
+            
+            // Refresh button functionality
+            const refreshBtn = document.getElementById('refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', function() {
+                    location.reload();
+                });
+            }
+            
+            // Copy user ID functionality
+            const userId = document.querySelector('.user-id');
+            if (userId) {
+                userId.addEventListener('click', function() {
+                    const idText = userId.textContent.replace('ID: ', '').trim();
+                    
+                    // Create a temporary textarea element to copy from
+                    const textarea = document.createElement('textarea');
+                    textarea.value = idText;
+                    textarea.style.position = 'absolute';
+                    textarea.style.left = '-9999px';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    
+                    // Show tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = 'Copied to clipboard!';
+                    userId.appendChild(tooltip);
+                    
+                    // Remove tooltip after 2 seconds
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</head>
+</body>
+</html>

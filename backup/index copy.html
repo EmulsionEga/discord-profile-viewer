@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" type="image/x-icon">
+    <link rel="stylesheet" href="discord-style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar - Server List -->
+        <div class="server-list">
+            <div class="server-item home">
+                <i class="fab fa-discord"></i>
+            </div>
+            <div class="server-divider"></div>
+            <div class="server-item active">
+                <img src="https://i.imgur.com/qlzUj3W.png" alt="Server Icon">
+                <div class="server-pill"></div>
+            </div>
+            <div class="server-item">
+                <div class="server-icon">G</div>
+            </div>
+            <div class="server-item">
+                <div class="server-icon">V</div>
+            </div>
+            <div class="server-item add-server">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="server-item explore">
+                <i class="fas fa-compass"></i>
+            </div>
+        </div>
+
+        <!-- Channel List -->
+        <div class="channel-list">
+            <div class="server-header">
+                <h3>Discord Server</h3>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <div class="channels-container">
+                <div class="channel-category">
+                    <div class="category-header">
+                        <i class="fas fa-chevron-down"></i>
+                        <span>TEXT CHANNELS</span>
+                    </div>
+                    <div class="channel">
+                        <i class="fas fa-hashtag"></i>
+                        <span>general</span>
+                    </div>
+                    <div class="channel active">
+                        <i class="fas fa-hashtag"></i>
+                        <span>profile-viewer</span>
+                    </div>
+                    <div class="channel">
+                        <i class="fas fa-hashtag"></i>
+                        <span>bot-commands</span>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <div class="category-header">
+                        <i class="fas fa-chevron-down"></i>
+                        <span>VOICE CHANNELS</span>
+                    </div>
+                    <div class="channel">
+                        <i class="fas fa-volume-up"></i>
+                        <span>General</span>
+                    </div>
+                    <div class="channel">
+                        <i class="fas fa-volume-up"></i>
+                        <span>Gaming</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-area">
+                <div class="current-user">
+                    <div class="user-avatar">
+                        <img id="current-user-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Your Avatar">
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div class="user-info">
+                        <div class="username">YourUsername</div>
+                        <div class="discriminator">#0000</div>
+                    </div>
+                </div>
+                <div class="user-controls">
+                    <i class="fas fa-microphone"></i>
+                    <i class="fas fa-headphones"></i>
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <!-- Banner -->
+                <div class="profile-banner" id="profile-banner">
+                    <!-- Banner image will be set by JS -->
+                </div>
+
+                <!-- User Info Section -->
+                <div class="profile-info-container">
+                    <div class="profile-avatar-container">
+                        <img id="profile-avatar" src="" alt="Profile Avatar">
+                        <div id="status-indicator" class="status-indicator online"></div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="profile-badges">
+                            <div class="badge nitro" title="Nitro Subscriber">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="badge boost" title="Server Booster">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                        </div>
+
+                        <h2 id="profile-username" class="profile-username">Loading...</h2>
+                        <div id="profile-tag" class="profile-tag">Loading...</div>
+
+                        <div class="profile-buttons">
+                            <button class="profile-button message">
+                                <i class="fas fa-message"></i> Message
+                            </button>
+                            <button class="profile-button add-friend">
+                                <i class="fas fa-user-plus"></i> Add Friend
+                            </button>
+                            <button class="profile-button more">
+                                <i class="fas fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Me Section -->
+                <div class="profile-section">
+                    <h3 class="section-title">ABOUT ME</h3>
+                    <div id="about-me" class="about-me-content">
+                        Just vibing and gaming. DM me for collabs!
+                    </div>
+                </div>
+
+                <!-- Discord Member Since -->
+                <div class="profile-section">
+                    <h3 class="section-title">DISCORD MEMBER SINCE</h3>
+                    <div id="member-since" class="member-since">
+                        <i class="fas fa-calendar-alt"></i> Loading...
+                    </div>
+                </div>
+
+                <!-- Note Section -->
+                <div class="profile-section">
+                    <h3 class="section-title">NOTE</h3>
+                    <div class="note-input-container">
+                        <input type="text" class="note-input" placeholder="Click to add a note">
+                    </div>
+                </div>
+
+                <!-- Connections Section -->
+                <div class="profile-section">
+                    <h3 class="section-title">CONNECTIONS</h3>
+                    <div id="connections-list" class="connections-list">
+                        <!-- Connections will be added by JS -->
+                    </div>
+                </div>
+
+                <!-- Current Activity -->
+                <div class="profile-section">
+                    <h3 class="section-title">CURRENTLY PLAYING</h3>
+                    <div id="current-activity" class="current-activity">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <img src="https://i.imgur.com/XpgGfZJ.png" alt="Game Icon" class="activity-icon">
+                                <div class="activity-info">
+                                    <div id="activity-name" class="activity-name">Loading...</div>
+                                    <div id="activity-details" class="activity-details">Loading...</div>
+                                </div>
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> <span id="activity-time">00:00 elapsed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mutual Servers -->
+                <div class="profile-section">
+                    <h3 class="section-title">MUTUAL SERVERS</h3>
+                    <div class="mutual-servers">
+                        <div class="mutual-server">
+                            <img src="https://i.imgur.com/qlzUj3W.png" alt="Server Icon">
+                            <span>Discord Server</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mutual Friends -->
+                <div class="profile-section">
+                    <h3 class="section-title">MUTUAL FRIENDS</h3>
+                    <div class="mutual-friends">
+                        <div class="mutual-friend">
+                            <img src="https://cdn.discordapp.com/embed/avatars/1.png" alt="Friend Avatar">
+                            <div class="friend-info">
+                                <span>FriendName</span>
+                                <div class="friend-status">
+                                    <div class="status-dot online"></div>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mutual-friend">
+                            <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Friend Avatar">
+                            <div class="friend-info">
+                                <span>AnotherFriend</span>
+                                <div class="friend-status">
+                                    <div class="status-dot idle"></div>
+                                    <span>Idle</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Member List -->
+        <div class="member-list">
+            <div class="member-group">
+                <h3 class="member-category">ONLINE — 3</h3>
+                <div class="member">
+                    <div class="member-avatar">
+                        <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Member Avatar">
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div class="member-name">ServerAdmin</div>
+                </div>
+                <div class="member">
+                    <div class="member-avatar">
+                        <img id="profile-member-avatar" src="" alt="Your Profile">
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div id="profile-member-name" class="member-name">Loading...</div>
+                </div>
+                <div class="member">
+                    <div class="member-avatar">
+                        <img src="https://cdn.discordapp.com/embed/avatars/2.png" alt="Member Avatar">
+                        <div class="status-indicator online"></div>
+                    </div>
+                    <div class="member-name">CoolUser</div>
+                </div>
+            </div>
+            <div class="member-group">
+                <h3 class="member-category">OFFLINE — 2</h3>
+                <div class="member">
+                    <div class="member-avatar">
+                        <img src="https://cdn.discordapp.com/embed/avatars/3.png" alt="Member Avatar">
+                        <div class="status-indicator offline"></div>
+                    </div>
+                    <div class="member-name">OfflineUser1</div>
+                </div>
+                <div class="member">
+                    <div class="member-avatar">
+                        <img src="https://cdn.discordapp.com/embed/avatars/4.png" alt="Member Avatar">
+                        <div class="status-indicator offline"></div>
+                    </div>
+                    <div class="member-name">OfflineUser2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Discord user ID
+        const DISCORD_USER_ID = "1261410867178901677";
+        let activityStartTime = new Date();
+
+        // Function to fetch user data from our backend
+        async function fetchDiscordUserData() {
+            try {
+                // Make a request to our backend endpoint that handles Discord API calls
+                const response = await fetch(`/user/${DISCORD_USER_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                
+                const userData = await response.json();
+                updateUserInterface(userData);
+            } catch (error) {
+                console.error("Error fetching Discord data:", error);
+                // If we can't fetch from our backend, use hardcoded data as fallback
+                useHardcodedData();
+            }
+        }
+
+        // Update the user interface with Discord data
+        function updateUserInterface(userData) {
+            // Update username and tag
+            const usernameElement = document.getElementById('profile-username');
+            const tagElement = document.getElementById('profile-tag');
+            const memberNameElement = document.getElementById('profile-member-name');
+            
+            if (usernameElement && userData.username) {
+                // Split username and discriminator
+                const parts = userData.username.split('#');
+                const username = parts[0];
+                const discriminator = parts.length > 1 ? parts[1] : '';
+                
+                usernameElement.textContent = username;
+                if (tagElement) {
+                    tagElement.textContent = discriminator ? `#${discriminator}` : '';
+                }
+                
+                if (memberNameElement) {
+                    memberNameElement.textContent = username;
+                }
+            }
+            
+            // Update avatar
+            const profileAvatar = document.getElementById('profile-avatar');
+            const memberAvatar = document.getElementById('profile-member-avatar');
+            
+            if (profileAvatar && userData.avatarURL) {
+                profileAvatar.src = userData.avatarURL;
+                
+                if (memberAvatar) {
+                    memberAvatar.src = userData.avatarURL;
+                }
+            }
+            
+            // Update banner
+            const profileBanner = document.getElementById('profile-banner');
+            if (profileBanner) {
+                if (userData.bannerURL) {
+                    profileBanner.style.backgroundImage = `url(${userData.bannerURL})`;
+                    profileBanner.style.backgroundColor = '';
+                } else if (userData.banner_color) {
+                    profileBanner.style.backgroundImage = '';
+                    profileBanner.style.backgroundColor = userData.banner_color;
+                }
+            }
+            
+            // Update status indicator
+            updateStatusIndicator(userData.status || 'offline');
+            
+            // Update activity
+            updateActivity(userData.activity);
+            
+            // Update connections
+            updateConnections();
+            
+            // Update member since date
+            const memberSinceElement = document.getElementById('member-since');
+            if (memberSinceElement) {
+                // Calculate a plausible join date based on user ID
+                const timestamp = Number(BigInt(DISCORD_USER_ID) >> 22n) + 1420070400000;
+                const joinDate = new Date(timestamp);
+                
+                const formattedDate = joinDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                memberSinceElement.innerHTML = `<i class="fas fa-calendar-alt"></i> ${formattedDate}`;
+            }
+        }
+        // Update the status indicator
+        function updateStatusIndicator(status) {
+            const statusIndicator = document.getElementById('status-indicator');
+            if (statusIndicator) {
+                // Remove all existing status classes
+                statusIndicator.classList.remove('online', 'idle', 'dnd', 'offline');
+                
+                // Add the appropriate status class
+                statusIndicator.classList.add(status);
+                statusIndicator.title = status.charAt(0).toUpperCase() + status.slice(1);
+            }
+        }
+        
+        // Update activity information
+        function updateActivity(activity) {
+            const activityName = document.getElementById('activity-name');
+            const activityDetails = document.getElementById('activity-details');
+            const activityTime = document.getElementById('activity-time');
+            const currentActivity = document.getElementById('current-activity');
+            
+            if (activity && activityName && activityDetails) {
+                // Parse activity string
+                let name = activity;
+                let details = '';
+                
+                if (activity.includes(' - ')) {
+                    const parts = activity.split(' - ');
+                    name = parts[0];
+                    details = parts[1];
+                }
+                
+                activityName.textContent = name;
+                activityDetails.textContent = details || 'Playing';
+                
+                // Show the activity section
+                if (currentActivity) {
+                    currentActivity.style.display = 'block';
+                }
+                
+                // Update elapsed time
+                if (activityTime) {
+                    updateElapsedTime();
+                    // Update time every minute
+                    setInterval(updateElapsedTime, 60000);
+                }
+            } else if (currentActivity) {
+                // Hide activity section if no activity
+                currentActivity.style.display = 'none';
+            }
+        }
+        
+        // Update elapsed time for activity
+        function updateElapsedTime() {
+            const activityTime = document.getElementById('activity-time');
+            if (activityTime) {
+                const now = new Date();
+                const elapsed = Math.floor((now - activityStartTime) / 60000); // minutes
+                
+                let timeText = '';
+                if (elapsed < 60) {
+                    timeText = `${elapsed} minute${elapsed !== 1 ? 's' : ''} elapsed`;
+                } else {
+                    const hours = Math.floor(elapsed / 60);
+                    const minutes = elapsed % 60;
+                    timeText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} elapsed`;
+                }
+                
+                activityTime.textContent = timeText;
+            }
+        }
+        
+        // Update connections
+        function updateConnections() {
+            const connectionsList = document.getElementById('connections-list');
+            if (!connectionsList) return;
+            
+            // Clear existing connections
+            connectionsList.innerHTML = '';
+            
+            // Add some mock connections
+            const connections = [
+                { type: 'youtube', name: 'poopoopeepee' },
+                { type: 'spotify', name: 'poopoopeepee' },
+                { type: 'github', name: 'poopoopeepee' }
+            ];
+            
+            connections.forEach(connection => {
+                const connectionElement = document.createElement('div');
+                connectionElement.className = 'connection';
+                
+                let iconClass = 'fas fa-link';
+                switch (connection.type.toLowerCase()) {
+                    case 'youtube':
+                        iconClass = 'fab fa-youtube';
+                        break;
+                    case 'twitch':
+                        iconClass = 'fab fa-twitch';
+                        break;
+                    case 'twitter':
+                        iconClass = 'fab fa-twitter';
+                        break;
+                    case 'spotify':
+                        iconClass = 'fab fa-spotify';
+                        break;
+                    case 'github':
+                        iconClass = 'fab fa-github';
+                        break;
+                    case 'steam':
+                        iconClass = 'fab fa-steam';
+                        break;
+                    case 'reddit':
+                        iconClass = 'fab fa-reddit';
+                        break;
+                }
+                
+                connectionElement.innerHTML = `
+                    <div class="connection-icon">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <div class="connection-info">
+                        <div class="connection-name">${connection.type.charAt(0).toUpperCase() + connection.type.slice(1)}</div>
+                        <div class="connection-username">${connection.name}</div>
+                    </div>
+                `;
+                
+                connectionsList.appendChild(connectionElement);
+            });
+        }
+        
+        // Use hardcoded data as fallback
+        function useHardcodedData() {
+            // Hardcoded avatar and banner hashes for the user
+            const avatarHash = "01e7231501d9d93242678b72c33e5e0c";
+            const bannerHash = "a_268597cb6e6390190aecf37762e0859e";
+            
+            // Construct URLs using the format from main.js
+            const avatarURL = `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.${avatarHash.startsWith("a_") ? "gif" : "png"}`;
+            const bannerURL = `https://cdn.discordapp.com/banners/${DISCORD_USER_ID}/${bannerHash}.${bannerHash.startsWith("a_") ? "gif" : "png"}`;
+            
+            // Update UI with hardcoded data
+            updateUserInterface({
+                username: "poopoopeepee#0001",
+                avatarURL: avatarURL,
+                bannerURL: bannerURL,
+                status: "online",
+                activity: "Playing Valorant - Competitive Match"
+            });
+        }
+        
+        // Add error handling for images
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileAvatar = document.getElementById('profile-avatar');
+            if (profileAvatar) {
+                profileAvatar.addEventListener('error', function() {
+                    console.log('Profile avatar failed to load');
+                    this.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
+                });
+            }
+            
+            const memberAvatar = document.getElementById('profile-member-avatar');
+            if (memberAvatar) {
+                memberAvatar.addEventListener('error', function() {
+                    console.log('Member avatar failed to load');
+                    this.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
+                });
+            }
+        });
+        
+        // Function to refresh status and activity
+        async function refreshStatusAndActivity() {
+            try {
+                const response = await fetch(`/status/${DISCORD_USER_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch status data');
+                }
+                
+                const statusData = await response.json();
+                updateStatusIndicator(statusData.status || 'offline');
+                updateActivity(statusData.activity);
+            } catch (error) {
+                console.error("Error fetching status:", error);
+                // No fallback needed as we already have data displayed
+            }
+        }
+        
+        // Initial data load
+        fetchDiscordUserData();
+        
+        // Refresh data periodically
+        setInterval(fetchDiscordUserData, 60000); // Full refresh every minute
+        setInterval(refreshStatusAndActivity, 15000); // Status refresh every 15 seconds
+    </script>
+</body>
+</html>

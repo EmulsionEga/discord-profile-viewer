@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Profile Viewer</title>
+    <meta name="description" content="View Discord user profiles with accurate status, activities, and connections">
+    <meta name="theme-color" content="#5865F2">
+    <link rel="stylesheet" href="/discord-profile-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" type="image/x-icon">
+    
+    <!-- Open Graph Meta Tags for better sharing -->
+    <meta property="og:title" content="Discord Profile Viewer">
+    <meta property="og:description" content="View Discord user profiles with accurate status, activities, and connections">
+    <meta property="og:image" content="/images/og-image.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Discord Profile Viewer">
+    <meta name="twitter:description" content="View Discord user profiles with accurate status, activities, and connections">
+    <meta name="twitter:image" content="/images/og-image.png">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container" id="main-content">
+        <div class="navigation-bar">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Search
+            </a>
+            <div class="nav-actions">
+                <button id="refresh-button" class="action-button" title="Refresh Profile">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button id="share-button" class="action-button" title="Share Profile">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <button id="theme-toggle" class="action-button" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <!-- Profile Header with Banner and Avatar -->
+            <div class="profile-header">
+                <div class="profile-banner" id="profile-banner">
+                    <div class="loading-overlay" id="loading-overlay">
+                        <div class="spinner"></div>
+                        <p>Loading profile...</p>
+                    </div>
+                </div>
+                
+                <div class="avatar-container">
+                    <img id="profile-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profile Avatar">
+                    <div class="status-indicator" id="status-indicator" title="Status"></div>
+                </div>
+            </div>
+            
+            <div class="profile-info-container">
+                <!-- User Details -->
+                <div class="profile-details">
+                    <div class="profile-name-container">
+                        <div class="name-status-wrapper">
+                            <h1 class="profile-username" id="profile-username">Loading username...</h1>
+                            <div class="status-badge" id="status-badge">
+                            </div>
+                        </div>
+                        <div class="profile-tag" id="profile-tag">Loading...</div>
+                    </div>
+                    
+                    <!-- Badges -->
+                    <div class="profile-badges-container">
+                        <div class="profile-badges" id="profile-badges">
+                            <!-- Badges will be added dynamically -->
+                            <div class="badge-placeholder"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="profile-buttons">
+                        <button class="profile-button message" id="message-button" aria-label="Send Message">
+                            <i class="fas fa-comment"></i> Message
+                        </button>
+                        <button class="profile-button add-friend" id="add-friend-button" aria-label="Add Friend">
+                            <i class="fas fa-user-plus"></i> Add Friend
+                        </button>
+                        <div class="button-group">
+                            <button class="profile-button block" id="block-button" aria-label="Block User">
+                                <i class="fas fa-ban"></i>
+                            </button>
+                            <button class="profile-button more-options" id="more-options-button" aria-label="More Options">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        
+            <!-- About Me Section -->
+            <div class="profile-section">
+                <div class="section-title">
+                    <i class="fas fa-user"></i> About Me
+                </div>
+                <div class="about-me-content" id="about-me-content">
+                    Loading...
+                </div>
+            </div>
+            
+            <!-- Member Since Section -->
+            <div class="profile-section">
+                <div class="section-title">
+                    <i class="fas fa-calendar-alt"></i> Discord Member Since
+                </div>
+                <div class="member-since" id="member-since">
+                    <i class="fas fa-clock"></i> Loading...
+                </div>
+            </div>
+            
+            <!-- Discord Presence -->
+            <div class="discord-presence profile-section" id="presence-section">
+                <div class="section-title">
+                    <i class="fab fa-discord" style="color: var(--discord-blurple);"></i> DISCORD STATUS
+                </div>
+                <div class="presence-content" id="presence-content">
+                    <div class="presence-loading">
+                        <div class="spinner"></div>
+                        <p>Loading activity...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mutual Servers Section -->
+            <div class="mutual-servers-section profile-section">
+                <div class="section-title">
+                    <i class="fas fa-server"></i> Mutual Servers
+                </div>
+                <div class="mutual-servers-list" id="mutual-servers-list">
+                    <!-- Will be populated dynamically or show "No mutual servers" -->
+                    <div class="no-mutual-servers">
+                        <p>No mutual servers</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Connections Section -->
+            <div class="connections-section profile-section" id="connections">
+                <div class="section-title">
+                    <i class="fas fa-link"></i> Connections
+                </div>
+                <div class="section-subtitle">Linked accounts from other platforms</div>
+                
+                <div class="connections-container">
+                    <!-- Loading state -->
+                    <div class="loading-connections" id="loading-connections">
+                        <div class="spinner-small"></div>
+                        <p>Loading connections...</p>
+                    </div>
+                    
+                    <!-- Error state -->
+                    <div class="connections-error" id="connections-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Could not load connections</p>
+                        <button class="retry-btn-small" id="retry-connections-btn">Retry</button>
+                    </div>
+                    
+                    <!-- Connections list -->
+                    <div class="connections-list" id="connections-list" style="display: none;">
+                        <!-- Connection items will be inserted here by JavaScript -->
+                    </div>
+                    
+                    <!-- Empty state -->
+                    <div class="no-connections" id="no-connections" style="display: none;">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-unlink"></i>
+                        </div>
+                        <p>No connected accounts</p>
+                        <span class="empty-state-hint">This user hasn't linked any external accounts</span>
+                    </div>
+                </div>
+                
+                <div class="connections-footer">
+                    <div class="connections-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Connections are accounts linked to this Discord profile</span>
+                    </div>
+                </div>
+            </div>
+                                    
+            <!-- Notes Section -->
+            <div class="notes-section profile-section">
+                <div class="section-title">
+                    <i class="fas fa-sticky-note"></i> Note
+                </div>
+                <div class="notes-content">
+                    <textarea id="user-note" placeholder="Click to add a note" aria-label="Add a note about this user"></textarea>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="profile-footer">
+                <p>&copy; 2024 muzlikgamer, All rights reserved.</p>
+                <p>This is not affiliated with Discord Inc.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/EmulsionEga" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="#" id="privacy-link">Privacy Policy</a>
+                    <a href="#" id="terms-link">Terms of Use</a>
+                </div>
+                <p class="version">Version 1.0.0</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Privacy Policy Modal -->
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Privacy Policy</h2>
+                <button class="close-modal" id="close-privacy-modal" aria-label="Close privacy policy">×</button>
+            </div>
+            <div class="modal-body">
+                <p>This application does not store any personal data. Discord IDs entered are only used to fetch profile information and are stored locally in your browser for convenience.</p>
+                <p>We use local storage to remember your theme preference and recently viewed profiles.</p>
+                <p>No data is sent to our servers except when authenticating through Discord's official OAuth2 flow.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terms of Use Modal -->
+    <div class="modal" id="terms-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Terms of Use</h2>
+                <button class="close-modal" id="close-terms-modal" aria-label="Close terms of use">×</button>
+            </div>
+            <div class="modal-body">
+                <p>This tool is provided for educational and personal use only.</p>
+                <p>By using this application, you agree not to use it for any malicious purposes or in violation of Discord's Terms of Service.</p>
+                <p>We are not responsible for any misuse of this tool.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Share Modal -->
+    <div class="modal" id="share-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Profile</h2>
+                <button class="close-modal" id="close-share-modal" aria-label="Close share dialog">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Share this Discord profile with others:</p>
+                <div class="share-url-container">
+                    <input type="text" id="share-url" readonly>
+                    <button id="copy-url-btn" class="copy-btn">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="share-buttons">
+                    <button class="share-btn twitter">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </button>
+                    <button class="share-btn facebook">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                    <button class="share-btn reddit">
+                        <i class="fab fa-reddit"></i> Reddit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Error Container -->
+    <div id="error-container" class="error-container" style="display: none;">
+        <!-- Error content will be inserted here by JavaScript -->
+    </div>
+    
+    <!-- Back to top button -->
+    <button id="back-to-top" class="back-to-top" title="Back to top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Toast container for notifications -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    
+    <!-- Keyboard shortcuts help -->
+    <div class="keyboard-shortcuts-help" id="keyboard-shortcuts-help">
+        <div class="shortcuts-content">
+            <h3><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h3>
+            <ul>
+                <li><kbd>R</kbd> - Refresh profile</li>
+                <li><kbd>S</kbd> - Share profile</li>
+                <li><kbd>T</kbd> - Toggle theme</li>
+                <li><kbd>Esc</kbd> - Go back</li>
+                <li><kbd>?</kbd> - Show/hide this help</li>
+            </ul>
+            <button id="close-shortcuts" class="close-shortcuts">Got it</button>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="discord-profile.js"></script>
+    
+    <!-- Preload default images -->
+    <link rel="preload" href="/images/default-game-icon.png" as="image" fetchpriority="high">
+    <link rel="preload" href="https://cdn.discordapp.com/embed/avatars/0.png" as="image" fetchpriority="high">
+</body>
+</html>

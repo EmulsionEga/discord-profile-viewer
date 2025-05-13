@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Discord Profile Viewer</title>
+    <meta name="description" content="View your authenticated Discord profile">
+    <meta name="theme-color" content="#5865F2">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header>
+            <nav class="profile-nav">
+                <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="/auth/logout" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </header>
+        
+        <main id="main-content">
+            <div class="card">
+                <div class="banner authenticated-banner">
+                    <h1>Your Discord Profile</h1>
+                </div>
+                
+                <div class="profile-content authenticated-profile">
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <img src="<%= user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png` %>" alt="<%= user.username %>'s Avatar" class="profile-avatar">
+                            <div class="status-indicator online" title="Online"></div>
+                        </div>
+                        
+                        <div class="profile-info">
+                            <h2 class="profile-username"><%= user.username %><% if (user.discriminator && user.discriminator !== '0') { %>#<%= user.discriminator %><% } %></h2>
+                            <p class="profile-id" title="Click to copy">ID: <%= user.id %></p>
+                            
+                            <div class="profile-details">
+                                <div class="detail-item">
+                                    <h3><i class="fas fa-calendar-alt"></i> Member Since</h3>
+                                    <p><%= createdAt %></p>
+                                </div>
+
+                                <% if (user.locale) { %>
+                                <div class="detail-item">
+                                    <h3><i class="fas fa-globe"></i> Locale</h3>
+                                    <p><%= user.locale %></p>
+                                </div>
+                                <% } %>
+                                
+                                <% if (user.email) { %>
+                                <div class="detail-item">
+                                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                                    <p><%= user.email %></p>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% if (user.connections && user.connections.length > 0) { %>
+                    <div class="connections">
+                        <h3><i class="fas fa-link"></i> Connections</h3>
+                        <div class="connections-list">
+                            <% user.connections.forEach(connection => { %>
+                                <div class="connection">
+                                    <% let icon = 'fas fa-link'; %>
+                                    <% if (connection.type === 'twitch') { icon = 'fab fa-twitch'; } %>
+                                    <% if (connection.type === 'youtube') { icon = 'fab fa-youtube'; } %>
+                                    <% if (connection.type === 'twitter') { icon = 'fab fa-twitter'; } %>
+                                    <% if (connection.type === 'github') { icon = 'fab fa-github'; } %>
+                                    <% if (connection.type === 'spotify') { icon = 'fab fa-spotify'; } %>
+                                    <% if (connection.type === 'reddit') { icon = 'fab fa-reddit'; } %>
+                                    <% if (connection.type === 'steam') { icon = 'fab fa-steam'; } %>
+                                    
+                                    <i class="<%= icon %>"></i>
+                                    <span><%= connection.name %></span>
+                                    <% if (connection.verified) { %>
+                                        <span class="verified-badge" title="Verified"><i class="fas fa-check-circle"></i></span>
+                                    <% } %>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <% } else { %>
+                    <div class="connections">
+                        <h3><i class="fas fa-link"></i> Connections</h3>
+                        <p class="no-connections">No connections found</p>
+                    </div>
+                    <% } %>
+                    
+                    <div class="profile-actions">
+                        <a href="/" class="action-btn"><i class="fas fa-search"></i> Look Up Another Profile</a>
+                        <a href="/auth/logout" class="action-btn secondary"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <p>This is not affiliated with Discord Inc.</p>
+                <p>Discord is a trademark of Discord Inc.</p>
+                <p class="version">Version 1.0.0</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="privacy-link">Privacy Policy</a>
+                <a href="#" id="terms-link">Terms of Use</a>
+                <a href="https://github.com/yourusername/discord-profile-viewer" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="privacy-modal" id="privacy-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-privacy-modal" aria-label="Close privacy policy">×</button>
+            <h2>Privacy Policy</h2>
+            <div class="modal-body">
+                <p>This application does not store any personal data. Discord IDs entered are only used to fetch profile information and are stored locally in your browser for convenience.</p>
+                <p>We use local storage to remember your theme preference and recently viewed profiles.</p>
+                <p>No data is sent to our servers except when authenticating through Discord's official OAuth2 flow.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="terms-modal" id="terms-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-terms-modal" aria-label="Close terms of use">×</button>
+            <h2>Terms of Use</h2>
+            <div class="modal-body">
+                <p>This tool is provided for educational and personal use only.</p>
+                <p>By using this application, you agree not to use it for any malicious purposes or in violation of Discord's Terms of Service.</p>
+                <p>We are not responsible for any misuse of this tool.</p>
+            </div>
+        </div>
+    </div>
+    
+    <button id="theme-toggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Copy user ID functionality
+            const userId = document.querySelector('.profile-id');
+            if (userId) {
+                userId.addEventListener('click', function() {
+                    const idText = userId.textContent.replace('ID: ', '').trim();
+                    
+                    // Create a temporary input element
+                    const input = document.createElement('input');
+                    input.style.position = 'absolute';
+                    input.style.left = '-9999px';
+                    input.value = idText;
+                    document.body.appendChild(input);
+                    
+                    // Select and copy the text
+                    input.select();
+                    document.execCommand('copy');
+                    
+                    // Remove the temporary input
+                    document.body.removeChild(input);
+                    
+                    // Show toast notification
+                    const toastContainer = document.getElementById('toast-container');
+                    if (toastContainer) {
+                        const toast = document.createElement('div');
+                        toast.className = 'toast success';
+                        toast.innerHTML = '<i class="fas fa-check-circle"></i> User ID copied to clipboard';
+                        toastContainer.appendChild(toast);
+                        
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 3000);
+                    }
+                });
+            }
+            
+            // Modal functionality
+            const privacyLink = document.getElementById('privacy-link');
+            const termsLink = document.getElementById('terms-link');
+            const privacyModal = document.getElementById('privacy-modal');
+            const termsModal = document.getElementById('terms-modal');
+            const closePrivacyModal = document.getElementById('close-privacy-modal');
+            const closeTermsModal = document.getElementById('close-terms-modal');
+            
+            if (privacyLink && privacyModal) {
+                privacyLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    privacyModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (termsLink && termsModal) {
+                termsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    termsModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closePrivacyModal) {
+                closePrivacyModal.addEventListener('click', function() {
+                    privacyModal.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            if (closeTermsModal) {
+                closeTermsModal.addEventListener('click', function() {
+                    termsModal.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                // Check for saved theme preference
+                const savedTheme = localStorage.getItem('discord-theme');
+                if (savedTheme === 'light') {
+                    document.body.classList.add('light-theme');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+                
+                // Theme toggle event listener
+                themeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('light-theme');
+                    
+                    if (document.body.classList.contains('light-theme')) {
+                        localStorage.setItem('discord-theme', 'light');
+                        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                    } else {
+                        localStorage.setItem('discord-theme', 'dark');
+                        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
